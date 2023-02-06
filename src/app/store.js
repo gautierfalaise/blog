@@ -1,9 +1,12 @@
+// Importation de la fonction `configureStore` depuis la bibliothèque "@reduxjs/toolkit"
 import { configureStore } from "@reduxjs/toolkit";
+
+// Importation du réducteur `articlesReducer` depuis le fichier "../feature/articlesSlice"
 import articlesReducer from "../feature/articlesSlice";
-// Ce fichier contient la configuration du store Redux.
-// Il importe le reducer de tâches (tasksReducer) qui gérera l'état partagé des tâches.
+
+// Exportation du magasin configuré, créé à l'aide de la fonction `configureStore`
+// Le magasin a un seul réducteur nommé "articles" qui est défini comme `articlesReducer`
 export default configureStore({
-    // Le store Redux est initialisé avec le reducer des tâches.
     reducer: {
         articles: articlesReducer,
     },

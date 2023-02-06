@@ -1,35 +1,42 @@
 import React from 'react'
 import "./Accueil.css"
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getArticlesData } from "../../feature/articlesSlice";
+import { useSelector } from 'react-redux'
 import { Link } from "react-router-dom";
 
-export default function Accueil() {
-    const dispatch = useDispatch();
-    const articlesData = useSelector((state) => state.articles.articles);
-    console.log(articlesData)
+// Importe les bibliothèques React et React-Router-Dom
+// Importe le hook useSelector de react-redux
+// Importe le feuille de style pour ce composant
 
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => {
-                return response.json()
-            })
-            .then(data => {
-                dispatch(getArticlesData(data));
-            })
-    }, [dispatch]);
+export default function Accueil() {
+    // Exporte le composant Accueil comme export par défaut de ce fichier
+
+    const articlesData = useSelector((state) => state.articles.articles);
+    // Récupère les données d'articles du magasin Redux en utilisant le hook useSelector
+    // L'argument state est l'état global du magasin et nous accédons aux données d'articles à partir de la propriété 'articles' de l'objet d'état
 
     return (
         <div className='article-container'>
+            {/* Le conteneur pour tous les articles */}
+
             {
                 articlesData && articlesData.map(article => {
+                    // Vérifie si articlesData existe et le parcours ensuite
+
                     return (
                         <div key={article.id} className="article-content">
+                            {/* Une clé unique est ajoutée à chaque article pour garantir que React puisse rendre la liste d'articles efficacement */}
+
                             <h2><Link className="article-title" to={`/article/${article.id}`}>
+                                {/* Le titre de l'article est enveloppé à l'intérieur d'un composant Link fourni par la bibliothèque React-Router-Dom */}
+                                {/* La destination du lien est définie sur "/article/{article.id}" où article.id est l'ID de l'article actuel en train d'être rendu */}
+
                                 {article.title}
+                                {/* Le titre de l'article */}
+
                             </Link></h2>
                             <p className='article-description'>{article.body}</p>
+                            {/* Le corps de l'article avec une classe de nom 'article-description' pour le style */}
+
                         </div>
                     )
                 })
@@ -37,17 +44,3 @@ export default function Accueil() {
         </div>
     )
 }
-
-/* 
-{
-    // Pour chaque tâche, on vérifie si elle n'est pas déjà réalisée.
-    // Si elle n'est pas réalisée, on la rend visible dans notre composant.
-    tasksData.map((task, index) => {
-        return (
-            <li key={task.id} className="list">
-                <button onClick={(e) => isCheckedFunc(task.id)} className="delete-button">Suppr.</button>
-                {task.text}
-            </li>
-        )
-    })
-} */
